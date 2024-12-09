@@ -70,7 +70,7 @@ progress {
     </div>
 
     <script>
-      function handleFileUpload(event) {
+function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file && (file.name.endsWith('.cpp') || file.name.endsWith('.dylib'))) {
         console.log('File selected: ' + file.name);
@@ -122,6 +122,18 @@ function downloadFile() {
         } else {
             clearInterval(downloadInterval);
             progressText.innerText = 'Download complete!';
+
+            // Simulate the download of a .dylib file (replace with actual file URL)
+            const fileUrl = 'path/to/memecat0/file.dylib'; // Replace with the actual .dylib file URL
+
+            const a = document.createElement('a');
+            a.href = fileUrl;
+            a.download = 'file.dylib'; // The name of the file to download
+            document.body.appendChild(a);
+            a.click(); // Trigger the download
+
+            // Remove the anchor element after downloading
+            document.body.removeChild(a);
         }
     }, 100);
 }
