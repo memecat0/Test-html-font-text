@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ to dylib File Upload and Download</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-upload input {
+    margin: 10px 0;
+}
+
+#download-button, #upload-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#download-button:hover, #upload-button:hover {
+    background-color: #45a049;
+}
+
+#progress-container {
+    display: none;
+    margin-top: 20px;
+}
+
+progress {
+    width: 100%;
+    height: 20px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C++ to dylib File Upload and Download</h1>
+
+        <!-- File upload section -->
+        <div class="file-upload">
+            <label for="file-upload">Upload C++ to dylib file:</label>
+            <input type="file" id="file-upload" accept=".cpp,.dylib" onchange="handleFileUpload(event)">
+            <button id="upload-button" onclick="uploadFile()">Upload</button>
+        </div>
+
+        <!-- Progress bar for downloading -->
+        <div id="progress-container">
+            <progress id="download-progress" value="0" max="100"></progress>
+            <p id="progress-text">Please wait... downloading</p>
+        </div>
+
+        <!-- File download button -->
+        <button id="download-button" onclick="downloadFile()">Download C++ to dylib</button>
+    </div>
+
+    <script>
+      function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file && (file.name.endsWith('.cpp') || file.name.endsWith('.dylib'))) {
+        console.log('File selected: ' + file.name);
+    } else {
+        alert('Please upload a C++ or dylib file.');
+        event.target.value = ''; // Clear the input if invalid file type
+    }
+}
+
+function uploadFile() {
+    const fileInput = document.getElementById('file-upload');
+    const file = fileInput.files[0];
+    if (!file) {
+        alert('Please select a file to upload.');
+        return;
+    }
+
+    // Simulating file upload process with a progress bar
+    const progressBar = document.getElementById('download-progress');
+    const progressText = document.getElementById('progress-text');
+    const progressContainer = document.getElementById('progress-container');
+    progressContainer.style.display = 'block';
+
+    let progress = 0;
+    const uploadInterval = setInterval(() => {
+        if (progress < 100) {
+            progress += 5;
+            progressBar.value = progress;
+            progressText.innerText = `Uploading... ${progress}%`;
+        } else {
+            clearInterval(uploadInterval);
+            progressText.innerText = 'Upload complete!';
+        }
+    }, 100);
+}
+
+function downloadFile() {
+    const progressBar = document.getElementById('download-progress');
+    const progressText = document.getElementById('progress-text');
+    const progressContainer = document.getElementById('progress-container');
+    progressContainer.style.display = 'block';
+
+    let progress = 0;
+    const downloadInterval = setInterval(() => {
+        if (progress < 100) {
+            progress += 5;
+            progressBar.value = progress;
+            progressText.innerText = `Please wait... downloading ${progress}%`;
+        } else {
+            clearInterval(downloadInterval);
+            progressText.innerText = 'Download complete!';
+        }
+    }, 100);
+}
+    </script>
+</body>
+</html>
